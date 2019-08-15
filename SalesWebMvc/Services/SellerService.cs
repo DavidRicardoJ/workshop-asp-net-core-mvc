@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SalesWebMvc.Services
 {
@@ -19,14 +20,14 @@ namespace SalesWebMvc.Services
         {
             return _context.Sellers.ToList();
         }
-        public void Insert (Seller obj)
+        public void Insert(Seller obj)
         {
             _context.Add(obj);
             _context.SaveChanges();
         }
         public Seller FindById(int id)
         {
-            return _context.Sellers.FirstOrDefault(obj => obj.Id == id);
+            return _context.Sellers.Include(obj => obj.Department).FirstOrDefault(obj => obj.Id == id);
         }
         public void Remove(int id)
         {
